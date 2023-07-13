@@ -1,0 +1,39 @@
+version: '3.4'
+
+networks:
+  dev:
+    driver: bridge
+
+services:
+  demo-app:
+    image: docker.io/library/demoapp
+    depends_on:
+      - "app_db"
+    container_name: demoapp-services
+    ports:
+      - "8088:80"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=app_db,1433;Database=SampleDbDriver;User Id=sa;Password=SecureP@ssw0rd2023!;TrustServerCertificate=True;
+      - ASPNETCORE_URLS=http://+:80
+    networks:
+      - dev
+
+  app_db:
+    image: mcr.microsoft.com/mssql/server
+    container_name: app_db
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=SecureP@ssw0rd2023!
+    ports:
+      - "1433:1433"
+    restart: always
+    volumes:
+      - app_data:/var/lib/mssql/data
+    networks:
+      - dev
+
+volumes:
+  app_data:

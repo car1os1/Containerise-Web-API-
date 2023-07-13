@@ -1,0 +1,24 @@
+@model List<Driver>
+@using DemoApp.Models
+
+
+<h1>List of Drivers</h1>
+
+<table>
+    <tr>
+        <th>Driver Number</th>
+        <th>Name</th>
+        <th></th>
+    </tr>
+    @foreach (var driver in Model)
+    {
+                <tr>
+                    <td>@driver.DriverNumber</td>
+                    <td>@driver.Name</td>
+                    <td>
+                        <a href="/Drivers/Delete/@driver.Id">Delete</a> |
+                        <a href="/Drivers/Update/@driver.Id">Update</a>
+                    </td>
+                </tr>
+    }
+</table>
