@@ -3,8 +3,10 @@ WELCOME
 requirements
 
 Docker:
+
     docker --version
 dotnet:
+
     dotnet --version
 
 Clone the repository:
